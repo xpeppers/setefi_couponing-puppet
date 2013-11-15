@@ -39,7 +39,9 @@ exec {
 
 package { ['oracle-java6-installer',
            'tomcat7',
-           'tomcat7-admin']:
+           'tomcat7-admin',
+           'git',
+           'nodejs']:
   ensure  => present,
   require => [Exec['apt-get update after ppa'],
               Exec['set-licence-selected'],
