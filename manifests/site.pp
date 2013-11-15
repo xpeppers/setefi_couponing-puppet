@@ -1,0 +1,3 @@
+class { 'couponing':
+  # environment => 'whatyouwant'
+}
