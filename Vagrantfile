@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
   #config.vm.box_url = "couponing_deploy.box"
   config.vm.box_url = "~/fake_services/fake_services.box"
 
-  config.vm.network "public_network", bridge: 'eth0', ip: '10.0.0.151'
+  config.vm.network "public_network", bridge: 'eth0', ip: '10.0.0.116'
   # config.vm.network "private_network", ip: "192.168.10.11"
   # config.vm.network :forwarded_port, guest: 3100, host: 3100
   # config.vm.network :hostonly, "192.168.10.90"
