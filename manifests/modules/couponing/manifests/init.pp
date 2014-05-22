@@ -9,6 +9,10 @@ class couponing {
       before      => Exec['apt-get update']
     }
 
+    user { 'vagrant':
+      groups => ['vagrant', 'admin', 'tomcat7']
+    }
+
     exec { 'apt-get update':
       command => "/usr/bin/apt-get update -y",
     }
