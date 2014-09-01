@@ -2,29 +2,24 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "couponing_deploy"
 
-  # it should be an Ubuntu server 12.04LTS
-  #config.vm.box_url = "couponing_deploy.box"
-  config.vm.box_url = "~/fake_services/fake_services.box"
+  config.vm.define "couponing_core" do |couponing|
+    couponing.vm.box = "couponing_core"
+    # it should be an Ubuntu server 12.04LTS
+    couponing.vm.box_url = "~/vagrant_boxes/couponing_core.box"
 
-  # config.vm.network "public_network", bridge: 'eth0', ip: '10.0.0.116'
-  # config.vm.network "private_network", type: :dhcp
-  config.vm.network "forwarded_port", guest: 8080, host: 8000
-  # config.vm.network :forwarded_port, guest: 3100, host: 3100
-  # config.vm.network :hostonly, "192.168.10.90"
+    couponing.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--memory", 512]
+    end
 
-  config.vm.provider "virtualbox" do |v|
-    v.customize ["modifyvm", :id, "--memory", 512]
-  end
+    couponing.vm.network "forwarded_port", guest: 8080, host: 8000
 
-  # config.vm.share_folder "v-data", "/vagrant_data", "../data"
-
-  config.vm.provision "puppet" do |puppet|
-     puppet.manifests_path = "manifests"
-     puppet.manifest_file  = "site.pp"
-     puppet.module_path = "manifests/modules"
-     puppet.options = "--verbose --debug"
+    couponing.vm.provision "puppet" do |puppet|
+       puppet.manifests_path = "manifests"
+       puppet.manifest_file  = "site.pp"
+       puppet.module_path = "manifests/modules"
+       puppet.options = "--verbose --debug"
+    end
   end
 
 end
