@@ -48,6 +48,7 @@ class couponing {
               'tomcat7',
               'tomcat7-admin',
               'git',
+              'subversion',
               'nodejs']:
       ensure  => present,
       require => [Exec['apt-get update after ppa'],
@@ -69,17 +70,6 @@ class couponing {
     JAVA_HOME=/usr/lib/jvm/java-6-oracle\n
     JAVA_OPTS=\"-Djava.awt.headless=true -Xmx128m -XX:+UseConcMarkSweepGC\"\n",
       require => Package['tomcat7']
-    }
-
-    file { '/etc/tomcat7/tomcat-users.xml':
-      content => "<?xml version='1.0' encoding='utf-8'?>
-    <tomcat-users>
-    <role rolename=\"manager-gui\"/>
-    <user username=\"tomcat\" password=\"1234\" roles=\"manager-gui\"/>
-    <role rolename=\"manager-script\"/>
-    <user username=\"deployer\" password=\"123123123123\" roles=\"manager-script\"/>
-    </tomcat-users>",
-      require => Package['tomcat7-admin']
     }
 
     service { 'tomcat7':

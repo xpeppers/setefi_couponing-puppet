@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
     couponing.vm.box = "couponing_core"
     # it should be an Ubuntu server 12.04LTS
     couponing.vm.box_url = "~/vagrant_boxes/couponing_core.box"
+    config.vm.synced_folder "~/phoenix", "/home/vagrant/phoenix"
 
     couponing.vm.provider "virtualbox" do |v|
       v.customize ["modifyvm", :id, "--memory", 512]
