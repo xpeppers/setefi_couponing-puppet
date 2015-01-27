@@ -44,12 +44,36 @@ class couponing {
       command => '/bin/echo debconf shared/accepted-oracle-license-v1-1 seen true | /usr/bin/debconf-set-selections';
     }
 
+    exec { 'buildr installing':
+      command => "/home/vagrant gem install buildr",
+      require => Package['ruby-full']
+    }
+
     package { ['oracle-java6-installer',
               'tomcat7',
-              'tomcat7-admin',
               'git',
               'subversion',
-              'nodejs']:
+              'nodejs',
+              'apache2',
+              'ant',
+              'ruby-full',
+              'ccze',
+              'rubygems',
+              'libsvn-java',
+              'sqsh',
+              'colordiff',
+              'curl',
+              'openssh-server',
+              'ack-grep',
+              'apache2-utils',
+              'httperf',
+              'libapache2-mod-perl2',
+              'apache2-threaded-dev',
+              'libaprutil1-dev',
+              'libipc-sharelite-perl',
+              'libapache2-request-perl',
+              'ntp',
+              'ag']:
       ensure  => present,
       require => [Exec['apt-get update after ppa'],
                   Exec['set-licence-selected'],
