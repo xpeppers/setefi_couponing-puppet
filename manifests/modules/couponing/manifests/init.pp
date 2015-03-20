@@ -29,11 +29,7 @@ class couponing {
 
     exec { 'apt-get update after ppa':
       command => "/usr/bin/apt-get update -y",
-      require => [Exec['oracle-java6-installer-ppa'], Exec['nodejs-ppa']]
-    }
-
-    exec { 'nodejs-ppa':
-      command => "/usr/bin/add-apt-repository -y ppa:chris-lea/node.js"
+      require => Exec['oracle-java6-installer-ppa']
     }
 
     exec {
@@ -53,7 +49,6 @@ class couponing {
               'tomcat7',
               'git',
               'subversion',
-              'nodejs',
               'apache2',
               'ant',
               'ruby-full',
@@ -80,24 +75,4 @@ class couponing {
                   Exec['set-licence-seen']]
     }
 
-    file { '/etc/init.d/tomcat7':
-      content => template('couponing/tomcat7.erb'),
-      owner   => 'root',
-      group   => 'root',
-      mode    => 755,
-      require => Package['tomcat7']
-    }
-
-    file { '/etc/default/tomcat7':
-      content => "TOMCAT7_USER=tomcat7\n
-    TOMCAT7_GROUP=tomcat7\n
-    JAVA_HOME=/usr/lib/jvm/java-6-oracle\n
-    JAVA_OPTS=\"-Djava.awt.headless=true -Xmx128m -XX:+UseConcMarkSweepGC\"\n",
-      require => Package['tomcat7']
-    }
-
-    service { 'tomcat7':
-      ensure => running,
-      subscribe => [File['/etc/default/tomcat7'], File['/etc/init.d/tomcat7']]
-    }
 }
